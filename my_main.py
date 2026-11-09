@@ -3,6 +3,16 @@
 
 from my_assistant import AppointmentAssistant
 from my_tool import AppointmentLookup
+from ollama_model import OllamaModel
+
+MODEL_NAME = "granite4.1:3b"
+
+INSTRUCTIONS = """You are Robin, a friendly appointment assistant.
+Answer in one short sentence.
+The office is at 40 Harbor Street, on the second floor.
+Customers should bring a photo ID and last year's tax return.
+Only state facts that appear in these instructions.
+If you do not know, say you do not know and refer the customer to the front desk."""
 
 SCHEDULE = {
     "monday": "9:00 am and 2:30 pm",
@@ -11,7 +21,8 @@ SCHEDULE = {
 }
 
 tool = AppointmentLookup(SCHEDULE)
-assistant = AppointmentAssistant("Robin", tool)
+model = OllamaModel(MODEL_NAME)
+assistant = AppointmentAssistant("Robin", tool, model, INSTRUCTIONS)
 
 print("Type a message, or type quit to stop.")
 message = input("You: ")
